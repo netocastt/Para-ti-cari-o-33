@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz 2026 Mi Estrellita ✨</title>
+
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{
+    margin:0;
+    background:#020617;
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+.stars,.stars2,.stars3{
+    position:fixed; inset:0; z-index:-1;
+}
+.stars::after,.stars2::after,.stars3::after{
+    content:"";
+    position:absolute; width:2px; height:2px; background:white;
+    box-shadow:
+      5vw 10vh,15vw 30vh,25vw 50vh,35vw 20vh,45vw 70vh,
+      55vw 40vh,65vw 80vh,75vw 60vh,85vw 25vh,95vw 45vh,
+      10vw 85vh,30vw 90vh,60vw 10vh,80vw 5vh;
+}
+.stars{animation:move 60s linear infinite}
+.stars2{opacity:.6;animation:move 120s linear infinite}
+.stars3{opacity:.3;animation:move 180s linear infinite}
+@keyframes move{to{transform:translateY(-100vh)}}
+
+.shooting-star{
+    position:fixed; top:20%; left:-20%;
+    width:120px; height:2px;
+    background:linear-gradient(90deg,transparent,white);
+    opacity:0; z-index:-1;
+    transform:rotate(15deg);
+    animation:shoot 1.2s linear forwards;
+}
+@keyframes shoot{
+    0%{opacity:1;transform:translateX(0) rotate(15deg)}
+    100%{opacity:0;transform:translateX(140vw) rotate(15deg)}
+}
+
+.container{
+    min-height:100vh; padding:30px 20px;
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+}
+h1{font-size:2.3em;margin-bottom:10px}
+p{font-size:1.1em;max-width:420px;line-height:1.6}
+button{
+    margin-top:20px; padding:15px 30px;
+    border:none; border-radius:30px;
+    background:#ff4d6d; color:white;
+    box-shadow:0 0 15px rgba(255,77,109,.6);
+}
+button:active{transform:scale(.95)}
+.hidden{display:none}
+
+.name-star{
+    margin-top:20px; font-size:2em; color:gold;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 5px gold}
+    to{text-shadow:0 0 20px gold}
+}
+
+.heart,.star,.love{
+    position:fixed; bottom:-20px;
+    pointer-events:none; animation:floatUp linear forwards;
+}
+.star{color:#ffd700}
+.love{color:#ff9db5;font-size:1.2em}
+@keyframes floatUp{
+    to{transform:translateY(-110vh);opacity:0}
+}
+
+.footer{margin-top:40px;font-size:.9em;opacity:.8}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+
+<div class="container">
+    <h1>🎆 Feliz Año Nuevo 2026 🎆</h1>
+
+    <p>
+        Amor, desde que llegaste a mi vida  
+        todo brilla muchisimo más ✨
+    </p>
+
+    <div class="name-star">⭐ <span id="nombre"></span> ⭐</div>
+
+    <button onclick="mostrarMensaje()">Tócame 💌</button>
+
+    <div id="mensaje" class="hidden">
+        <p style="margin-top:25px;">
+            Este 2026 quiero seguir caminando contigo,
+            soñando y amándote cada día.
+            <br><br><strong>Siempre serás mi estrellita 💫</strong>
+        </p>
+        <button onclick="explosion()">Presiona aquí ✨</button>
+        <button onclick="toggleMusic()">🎶 Música</button>
+    </div>
+
+    <div class="footer"> Hecho con todo mi amor 💖</div>
+</div>
+
+<audio id="music" loop>
+  <source src="Primaveral.mp3">
+</audio>
+
+<script>
+
+const nombre="MI ESTRELLITA";
+document.getElementById("nombre").textContent=nombre;
+
+function mostrarMensaje(){
+  document.getElementById("mensaje").classList.remove("hidden");
+}
+function toggleMusic(){
+  const m=document.getElementById("music");
+  m.paused?m.play():m.pause();
+}
+
+function crear(tipo,x,texto){
+  const e=document.createElement("div");
+  e.className=tipo;
+  e.innerHTML=texto|| (tipo==="heart"?"❤️":tipo==="star"?"✨":"Te amo");
+  e.style.left=x+"px";
+  e.style.fontSize=(Math.random()*18+14)+"px";
+  e.style.animationDuration=(Math.random()*3+4)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),8000);
+}
+
+setInterval(()=>crear("star",Math.random()*innerWidth),1200);
+setInterval(()=>crear("heart",Math.random()*innerWidth),1600);
+setInterval(()=>crear("love",Math.random()*innerWidth,"Te amo"),3500);
+
+function explosion(){
+  for(let i=0;i<25;i++){
+    crear("star",Math.random()*innerWidth);
+    crear("heart",Math.random()*innerWidth);
+    crear("love",Math.random()*innerWidth,"Te amo");
+  }
+}
+
+
+document.addEventListener("click",e=>{
+  crear("star",e.clientX);
+  crear("heart",e.clientX);
+});
+
+setInterval(()=>{
+  const s=document.createElement("div");
+  s.className="shooting-star";
+  s.style.top=(Math.random()*50+10)+"%";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),1200);
+},7000);
+</script>
+
+</body>
+</html>
